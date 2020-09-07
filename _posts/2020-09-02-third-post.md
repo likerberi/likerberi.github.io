@@ -5,4 +5,4 @@ categories: more...
 ---
 
 - likerberi97@gmail.com
-- forthenextstep.tistory.com
+- https://forthenextstep.tistory.com
