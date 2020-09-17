@@ -6,7 +6,7 @@ mmistake.
 ---
 
 ## Some themes will be shared such as
-* VWORLD
-* VanillaJS
+* webGL
+* NodeJS, Typescript
 * Flutter written by Dart
 ...etc.
