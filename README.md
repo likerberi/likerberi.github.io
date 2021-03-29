@@ -5,8 +5,7 @@ This web-page is oriented by
 mmistake.
 ---
 
-## Some themes will be shared such as
-* webGL
-* NodeJS, Typescript
-* Flutter written by Dart
-...etc.
+## Some ideas will be shared such as
+* WEB:: JS based, Node, Ts and webGL.
+* Native:: Kotlin and Flutter
+* C/C++ and React(Native) is plus.
