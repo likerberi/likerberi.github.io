@@ -6,6 +6,6 @@ mmistake.
 ---
 
 ## Some ideas will be shared such as
-* WEB:: JS based, Node, Ts and webGL.
+* WEB:: JS based, Node, TS and webGL.
 * Native:: Kotlin and Flutter
 * C/C++ and React(Native) is plus.
