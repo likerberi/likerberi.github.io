@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인프라 구조 · 김달진 리뉴얼</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    /* 아키텍처 박스 다이어그램 */
+    .arch-box {
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      border: 1px solid;
+      transition: all var(--transition);
+    }
+    .arch-box:hover { filter: brightness(1.08); }
+    .arch-box-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .arch-box-items {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .arch-item {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.07);
+    }
+    .arch-connector {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 6px 0;
+    }
+    .arch-connector-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-light);
+      max-width: 80px;
+    }
+
+    /* 플로우 다이어그램 */
+    .flow-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      transition: all var(--transition);
+      position: relative;
+    }
+    .flow-node:hover {
+      border-color: var(--border-light);
+      background: var(--bg-card-hover);
+    }
+    .flow-node-icon { font-size: 28px; margin-bottom: 8px; }
+    .flow-node-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .flow-node-sub { font-size: 11px; color: var(--text-muted); }
+    .flow-arrow {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 8px;
+      color: var(--text-muted);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* 포트/서버 레이아웃 */
+    .server-row {
+      display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;
+    }
+    .server-box {
+      flex: 1;
+      min-width: 180px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .server-header {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .server-body {
+      padding: 12px 16px;
+    }
+    .server-port {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+    .server-port:last-child { border-bottom: none; }
+    .port-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-btn">☰</button>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="site-name">DALJIN.COM</div>
+        <div class="site-sub">리뉴얼 기획서 v1.0</div>
+      </div>
+      <div class="sidebar-label">메뉴</div>
+      <nav><ul class="nav-list">
+        <li class="nav-item"><a href="../index.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 5.5A2 2 0 014 3.5h8a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2v-7zm2-1a1 1 0 00-1 1V12.5a1 1 0 001 1h8a1 1 0 001-1V5.5a1 1 0 00-1-1H4z"/></svg>대시보드</a></li>
+        <li class="nav-item"><a href="overview.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zM0 8a8 8 0 1116 0A8 8 0 010 8zm9-3.5a1 1 0 11-2 0 1 1 0 012 0zM6.75 7.5a.75.75 0 000 1.5H7.5v2.25h-.75a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5H8.5V7.5h-1.75z"/></svg>핵심 목표</a></li>
+        <li class="nav-item"><a href="tech-stack.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M4.75 1a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V1.75a.75.75 0 00-.75-.75h-6.5zm0 1.5h6.5V2.5H4.75V2.5zm0 1.5h6.5v8h-6.5v-8z"/></svg>기술 스택</a></li>
+        <li class="nav-item"><a href="infrastructure.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1.5 2.5a1 1 0 011-1h11a1 1 0 011 1v3a1 1 0 01-1 1H2.5a1 1 0 01-1-1v-3zm1 .5v2h11V3h-11zm-1 5a1 1 0 011-1h11a1 1 0 011 1v3a1 1 0 01-1 1H2.5a1 1 0 01-1-1v-3zm1 .5v2h11V9h-11zm5.5 4.25a.75.75 0 01.75-.75h4a.75.75 0 010 1.5h-4a.75.75 0 01-.75-.75z"/></svg>인프라 구조</a></li>
+        <li class="nav-item"><a href="migration.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2.75A.75.75 0 012.75 2h10.5a.75.75 0 010 1.5H2.75A.75.75 0 012 2.75zm0 5A.75.75 0 012.75 7h10.5a.75.75 0 010 1.5H2.75A.75.75 0 012 7.75zM2.75 12a.75.75 0 000 1.5h10.5a.75.75 0 000-1.5H2.75z"/></svg>데이터 마이그레이션</a></li>
+        <li class="nav-item"><a href="ownership.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 2.5a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0zM8 1a1.5 1.5 0 100 3A1.5 1.5 0 008 1zM11.5 13h-7c-.28 0-.5-.22-.5-.5C4 10.57 5.79 9 8 9s4 1.57 4 3.5c0 .28-.22.5-.5.5zm-7-1.5h7c-.28-1.1-1.5-1.5-3.5-1.5s-3.22.4-3.5 1.5z"/></svg>소유권 관리</a></li>
+        <li class="nav-item"><a href="milestone.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M4.75 2a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm-2 3a.75.75 0 000 1.5h10.5a.75.75 0 000-1.5H2.75zm-1 3.75a.75.75 0 01.75-.75h12.5a.75.75 0 010 1.5H2.5a.75.75 0 01-.75-.75zm.75 3.75a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5H2.5z"/></svg>마일스톤</a></li>
+      </ul></nav>
+      <div class="sidebar-footer">기준일: <span id="current-date"></span></div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div class="breadcrumb">대시보드 › <span>인프라 구조</span></div>
+        <h1>하이브리드 클라우드 인프라 구조도</h1>
+        <p class="subtitle">사용자 요청부터 데이터 저장까지의 전체 흐름과 각 컴포넌트의 역할을 시각적으로 정리합니다.</p>
+        <div class="tag-row">
+          <span class="tag tag-blue">하이브리드 클라우드</span>
+          <span class="tag tag-teal">Cloudflare CDN</span>
+          <span class="tag tag-orange">네이버 클라우드</span>
+        </div>
+      </div>
+
+      <!-- 전체 요청 흐름 -->
+      <p class="section-title">요청 처리 흐름</p>
+      <div class="flow-row" style="margin-bottom:12px;">
+        <div class="flow-node">
+          <div class="flow-node-icon">👤</div>
+          <div class="flow-node-name">사용자</div>
+          <div class="flow-node-sub">브라우저 / 앱</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="border-color:rgba(0,212,170,0.3);">
+          <div class="flow-node-icon">🌐</div>
+          <div class="flow-node-name">Cloudflare CDN</div>
+          <div class="flow-node-sub">엣지 캐시 · DDoS 방어</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="border-color:rgba(167,139,250,0.3);">
+          <div class="flow-node-icon">⚡</div>
+          <div class="flow-node-name">Next.js</div>
+          <div class="flow-node-sub">SSR / SSG 렌더링</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="border-color:rgba(255,123,40,0.3);">
+          <div class="flow-node-icon">🔴</div>
+          <div class="flow-node-name">Laravel API</div>
+          <div class="flow-node-sub">비즈니스 로직</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="border-color:rgba(52,211,153,0.3);">
+          <div class="flow-node-icon">🗄️</div>
+          <div class="flow-node-name">Managed DB</div>
+          <div class="flow-node-sub">MySQL · Redis</div>
+        </div>
+      </div>
+      <div style="text-align:right; font-size:11px; color:var(--text-muted); margin-bottom:36px;">
+        ↑ 이미지 요청은 CDN에서 S3 직접 서비스 (API 서버 미경유)
+      </div>
+
+      <!-- 인프라 레이어 상세 -->
+      <p class="section-title">인프라 레이어 상세</p>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:40px;">
+
+        <!-- CDN 레이어 -->
+        <div class="arch-box" style="background:rgba(0,212,170,0.05);border-color:rgba(0,212,170,0.25);">
+          <div class="arch-box-title" style="color:var(--teal);">🌐 CDN / 보안 레이어 — Cloudflare</div>
+          <div class="arch-box-items">
+            <span class="arch-item">도메인 DNS 관리</span>
+            <span class="arch-item">SSL/TLS 자동 갱신</span>
+            <span class="arch-item">정적 파일 엣지 캐시</span>
+            <span class="arch-item">DDoS 방어</span>
+            <span class="arch-item">이미지 CDN (Cloudflare Images)</span>
+            <span class="arch-item">WAF (웹 방화벽)</span>
+          </div>
+        </div>
+
+        <!-- 프론트엔드 레이어 -->
+        <div class="arch-box" style="background:rgba(167,139,250,0.05);border-color:rgba(167,139,250,0.25);">
+          <div class="arch-box-title" style="color:var(--purple);">⚡ 프론트엔드 서버 — Next.js (Node.js)</div>
+          <div class="arch-box-items">
+            <span class="arch-item">App Router (서버 컴포넌트)</span>
+            <span class="arch-item">SSR — 전시·작가 상세 페이지</span>
+            <span class="arch-item">SSG — 정적 랜딩·소개 페이지</span>
+            <span class="arch-item">ISR — 인기 콘텐츠 캐시 갱신</span>
+            <span class="arch-item">이미지 최적화 (next/image)</span>
+          </div>
+        </div>
+
+        <!-- 백엔드 레이어 -->
+        <div class="arch-box" style="background:rgba(255,123,40,0.05);border-color:rgba(255,123,40,0.25);">
+          <div class="arch-box-title" style="color:var(--orange);">🔴 API 서버 — Laravel (PHP 8.3 / Nginx)</div>
+          <div class="arch-box-items">
+            <span class="arch-item">RESTful API (/api/v1/...)</span>
+            <span class="arch-item">Sanctum 토큰 인증</span>
+            <span class="arch-item">Eloquent ORM</span>
+            <span class="arch-item">Queue 비동기 작업</span>
+            <span class="arch-item">Redis 캐시·세션</span>
+            <span class="arch-item">Scheduler (배치 처리)</span>
+          </div>
+        </div>
+
+        <!-- 데이터 레이어 -->
+        <div class="arch-box" style="background:rgba(52,211,153,0.05);border-color:rgba(52,211,153,0.25);">
+          <div class="arch-box-title" style="color:var(--green);">🗄️ 데이터 레이어 — 네이버 클라우드 (국내 퍼블릭 클라우드)</div>
+          <div class="arch-box-items">
+            <span class="arch-item" style="color:var(--green);">Managed MySQL — 핵심 데이터 자산</span>
+            <span class="arch-item">자동 일 1회 백업</span>
+            <span class="arch-item">Failover 자동 전환</span>
+            <span class="arch-item">Redis (캐시·큐)</span>
+            <span class="arch-item">Object Storage (S3 호환)</span>
+            <span class="arch-item" style="color:var(--yellow);">Elasticsearch (선택)</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 서버 구성 상세 -->
+      <p class="section-title">서버 구성 (권장)</p>
+      <div class="server-row" style="margin-bottom:40px;">
+        <div class="server-box">
+          <div class="server-header" style="background:rgba(167,139,250,0.1); color:var(--purple);">
+            ⚡ 프론트엔드 서버
+          </div>
+          <div class="server-body">
+            <div class="server-port">
+              <span>Node.js (Next.js)</span>
+              <span class="port-num">:3000</span>
+            </div>
+            <div class="server-port">
+              <span>Nginx 리버스 프록시</span>
+              <span class="port-num">:80/:443</span>
+            </div>
+            <div class="server-port">
+              <span>PM2 프로세스 관리</span>
+              <span class="port-num">cluster</span>
+            </div>
+          </div>
+        </div>
+        <div class="server-box">
+          <div class="server-header" style="background:rgba(255,123,40,0.1); color:var(--orange);">
+            🔴 백엔드 API 서버
+          </div>
+          <div class="server-body">
+            <div class="server-port">
+              <span>PHP-FPM (Laravel)</span>
+              <span class="port-num">:9000</span>
+            </div>
+            <div class="server-port">
+              <span>Nginx</span>
+              <span class="port-num">:80/:443</span>
+            </div>
+            <div class="server-port">
+              <span>Queue Worker</span>
+              <span class="port-num">daemon</span>
+            </div>
+          </div>
+        </div>
+        <div class="server-box">
+          <div class="server-header" style="background:rgba(52,211,153,0.1); color:var(--green);">
+            🗄️ 데이터베이스 (Managed)
+          </div>
+          <div class="server-body">
+            <div class="server-port">
+              <span>MySQL Primary</span>
+              <span class="port-num">:3306</span>
+            </div>
+            <div class="server-port">
+              <span>MySQL Replica (읽기)</span>
+              <span class="port-num">:3306</span>
+            </div>
+            <div class="server-port">
+              <span>Redis</span>
+              <span class="port-num">:6379</span>
+            </div>
+          </div>
+        </div>
+        <div class="server-box">
+          <div class="server-header" style="background:rgba(251,191,36,0.1); color:var(--yellow);">
+            ☁️ 오브젝트 스토리지
+          </div>
+          <div class="server-body">
+            <div class="server-port">
+              <span>이미지 원본</span>
+              <span class="port-num">S3</span>
+            </div>
+            <div class="server-port">
+              <span>리사이즈 캐시</span>
+              <span class="port-num">CDN</span>
+            </div>
+            <div class="server-port">
+              <span>백업 파일</span>
+              <span class="port-num">cold</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px;">⚠️ 이미지 저장 원칙 (절대 준수)</div>
+        <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.75;">
+          전시 이미지, 작가 사진, 기사 첨부파일 등 <strong style="color:var(--red);">모든 파일은 반드시 오브젝트 스토리지(S3)에만 저장</strong>해야 합니다.
+          서버 로컬 디스크(/uploads, /storage 등)에 저장하는 것은 절대 금지합니다.
+          서버 교체·장애 시 파일 유실 위험이 있으며, 이는 수십 년 아카이브의 영구 손실을 의미합니다.
+        </p>
+      </div>
+    </main>
+  </div>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

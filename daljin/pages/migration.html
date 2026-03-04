@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>데이터 마이그레이션 · 김달진 리뉴얼</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .data-category {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all var(--transition);
+    }
+    .data-category:hover {
+      border-color: var(--border-light);
+      transform: translateY(-2px);
+    }
+    .data-cat-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+    }
+    .data-cat-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .data-cat-name { font-size: 15px; font-weight: 800; }
+    .data-cat-count { font-size: 12px; color: var(--text-muted); }
+    .data-cat-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .data-cat-note { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; }
+
+    /* 프로세스 스텝 */
+    .process-step {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all var(--transition);
+    }
+    .process-step:hover {
+      border-color: var(--border-light);
+      background: var(--bg-card-hover);
+    }
+    .step-num {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .step-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+    .step-tools { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .step-tool {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-light);
+    }
+
+    /* 스키마 매핑 테이블 */
+    .mapping-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    .mapping-table th, .mapping-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    .mapping-table th {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--bg-secondary);
+    }
+    .mapping-table tr:last-child td { border-bottom: none; }
+    .old-schema { color: var(--orange); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+    .new-schema { color: var(--teal); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+    .rel-badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-btn">☰</button>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="site-name">DALJIN.COM</div>
+        <div class="site-sub">리뉴얼 기획서 v1.0</div>
+      </div>
+      <div class="sidebar-label">메뉴</div>
+      <nav><ul class="nav-list">
+        <li class="nav-item"><a href="../index.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 5.5A2 2 0 014 3.5h8a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2v-7zm2-1a1 1 0 00-1 1V12.5a1 1 0 001 1h8a1 1 0 001-1V5.5a1 1 0 00-1-1H4z"/></svg>대시보드</a></li>
+        <li class="nav-item"><a href="overview.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zM0 8a8 8 0 1116 0A8 8 0 010 8zm9-3.5a1 1 0 11-2 0 1 1 0 012 0zM6.75 7.5a.75.75 0 000 1.5H7.5v2.25h-.75a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5H8.5V7.5h-1.75z"/></svg>핵심 목표</a></li>
+        <li class="nav-item"><a href="tech-stack.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M4.75 1a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V1.75a.75.75 0 00-.75-.75h-6.5zm0 1.5h6.5V2.5H4.75V2.5zm0 1.5h6.5v8h-6.5v-8z"/></svg>기술 스택</a></li>
+        <li class="nav-item"><a href="infrastructure.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1.5 2.5a1 1 0 011-1h11a1 1 0 011 1v3a1 1 0 01-1 1H2.5a1 1 0 01-1-1v-3zm1 .5v2h11V3h-11zm-1 5a1 1 0 011-1h11a1 1 0 011 1v3a1 1 0 01-1 1H2.5a1 1 0 01-1-1v-3zm1 .5v2h11V9h-11zm5.5 4.25a.75.75 0 01.75-.75h4a.75.75 0 010 1.5h-4a.75.75 0 01-.75-.75z"/></svg>인프라 구조</a></li>
+        <li class="nav-item"><a href="migration.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2.75A.75.75 0 012.75 2h10.5a.75.75 0 010 1.5H2.75A.75.75 0 012 2.75zm0 5A.75.75 0 012.75 7h10.5a.75.75 0 010 1.5H2.75A.75.75 0 012 7.75zM2.75 12a.75.75 0 000 1.5h10.5a.75.75 0 000-1.5H2.75z"/></svg>데이터 마이그레이션</a></li>
+        <li class="nav-item"><a href="ownership.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 2.5a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0zM8 1a1.5 1.5 0 100 3A1.5 1.5 0 008 1zM11.5 13h-7c-.28 0-.5-.22-.5-.5C4 10.57 5.79 9 8 9s4 1.57 4 3.5c0 .28-.22.5-.5.5zm-7-1.5h7c-.28-1.1-1.5-1.5-3.5-1.5s-3.22.4-3.5 1.5z"/></svg>소유권 관리</a></li>
+        <li class="nav-item"><a href="milestone.html"><svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M4.75 2a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm-2 3a.75.75 0 000 1.5h10.5a.75.75 0 000-1.5H2.75zm-1 3.75a.75.75 0 01.75-.75h12.5a.75.75 0 010 1.5H2.5a.75.75 0 01-.75-.75zm.75 3.75a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5H2.5z"/></svg>마일스톤</a></li>
+      </ul></nav>
+      <div class="sidebar-footer">기준일: <span id="current-date"></span></div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div class="breadcrumb">대시보드 › <span>데이터 마이그레이션</span></div>
+        <h1>데이터 마이그레이션 전략</h1>
+        <p class="subtitle">30년 이상 축적된 전시·작가·기사·박물관 데이터를 유실 없이 100% 새로운 DB 구조로 이관합니다.</p>
+        <div class="tag-row">
+          <span class="tag tag-red">100% 이관 필수</span>
+          <span class="tag tag-orange">무손실 원칙</span>
+          <span class="tag tag-blue">검증 보고서 제출</span>
+        </div>
+      </div>
+
+      <!-- 이관 대상 데이터 -->
+      <p class="section-title">이관 대상 데이터 카테고리</p>
+      <div class="grid-2" style="margin-bottom:40px;">
+        <div class="data-category">
+          <div class="data-cat-header">
+            <div class="data-cat-icon" style="background:rgba(79,156,249,0.15);">🖼️</div>
+            <div>
+              <div class="data-cat-name">전시 정보</div>
+              <div class="data-cat-count">수만 건 이상</div>
+            </div>
+          </div>
+          <div class="data-cat-tags">
+            <span class="tag tag-blue">전시명</span>
+            <span class="tag tag-blue">기간</span>
+            <span class="tag tag-blue">장소</span>
+            <span class="tag tag-blue">작가 관계망</span>
+            <span class="tag tag-blue">이미지</span>
+          </div>
+          <div class="data-cat-note">개관전부터 현재까지의 전시 이력. 작가·갤러리·박물관과의 관계 데이터 포함. 기존 PHP 코드의 카테고리 분류 체계를 신규 taxonomy로 재매핑 필요.</div>
+        </div>
+        <div class="data-category">
+          <div class="data-cat-header">
+            <div class="data-cat-icon" style="background:rgba(0,212,170,0.15);">👤</div>
+            <div>
+              <div class="data-cat-name">작가 프로필</div>
+              <div class="data-cat-count">수천 명 이상</div>
+            </div>
+          </div>
+          <div class="data-cat-tags">
+            <span class="tag tag-teal">작가명</span>
+            <span class="tag tag-teal">약력</span>
+            <span class="tag tag-teal">작품 이미지</span>
+            <span class="tag tag-teal">전시 이력</span>
+          </div>
+          <div class="data-cat-note">한국 근현대 미술 작가 데이터베이스. 한글명·영문명 병기, 생몰연도, 학력·경력, 수상 이력 등 정형·비정형 데이터 혼재.</div>
+        </div>
+        <div class="data-category">
+          <div class="data-cat-header">
+            <div class="data-cat-icon" style="background:rgba(251,191,36,0.15);">📰</div>
+            <div>
+              <div class="data-cat-name">기사·아카이브</div>
+              <div class="data-cat-count">수십만 건 이상</div>
+            </div>
+          </div>
+          <div class="data-cat-tags">
+            <span class="tag tag-yellow">기사 본문</span>
+            <span class="tag tag-yellow">작성일</span>
+            <span class="tag tag-yellow">카테고리</span>
+            <span class="tag tag-yellow">첨부 이미지</span>
+          </div>
+          <div class="data-cat-note">뉴스·칼럼·리뷰·평론 등 텍스트 기반 아카이브. HTML 태그 정제 및 이미지 경로 S3로 일괄 변환 필요. 가장 볼륨이 큰 이관 대상.</div>
+        </div>
+        <div class="data-category">
+          <div class="data-cat-header">
+            <div class="data-cat-icon" style="background:rgba(167,139,250,0.15);">🏛️</div>
+            <div>
+              <div class="data-cat-name">박물관·갤러리</div>
+              <div class="data-cat-count">수백 곳 이상</div>
+            </div>
+          </div>
+          <div class="data-cat-tags">
+            <span class="tag tag-purple">기관명</span>
+            <span class="tag tag-purple">위치정보</span>
+            <span class="tag tag-purple">운영시간</span>
+            <span class="tag tag-purple">전시 연계</span>
+          </div>
+          <div class="data-cat-note">전국 미술관·갤러리·공공기관 정보. 전시와의 연계 관계 데이터 정합성 검증 필수. 지도 API 연동을 위한 좌표 데이터 보강 필요.</div>
+        </div>
+      </div>
+
+      <!-- 이관 5단계 프로세스 -->
+      <p class="section-title">이관 5단계 프로세스</p>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:40px;">
+        <div class="process-step">
+          <div class="step-num" style="background:rgba(79,156,249,0.2);color:var(--blue);">01</div>
+          <div class="step-body">
+            <div class="step-title">현행 DB 분석 및 스키마 문서화</div>
+            <div class="step-desc">기존 PHP/MySQL DB의 테이블 구조, 컬럼, 관계망, 데이터 타입을 전수 조사. 이상 데이터(NULL, 중복, 인코딩 오류) 목록 작성.</div>
+            <div class="step-tools"><span class="step-tool">mysqldump</span><span class="step-tool">Python pandas</span><span class="step-tool">ERD 도구</span></div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num" style="background:rgba(0,212,170,0.2);color:var(--teal);">02</div>
+          <div class="step-body">
+            <div class="step-title">신규 DB 스키마 설계 및 매핑표 작성</div>
+            <div class="step-desc">Laravel 마이그레이션 기반 신규 스키마 설계. 구 테이블 컬럼 → 신 테이블 컬럼 1:1 매핑표 문서화. 관계 재정의 (FK, 중간 테이블 등).</div>
+            <div class="step-tools"><span class="step-tool">Laravel Migration</span><span class="step-tool">Spreadsheet 매핑표</span></div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num" style="background:rgba(167,139,250,0.2);color:var(--purple);">03</div>
+          <div class="step-body">
+            <div class="step-title">이관 스크립트 개발 및 테스트 이관</div>
+            <div class="step-desc">PHP/Python 기반 자동화 이관 스크립트 개발. 스테이징 환경에 테스트 이관 실시 후 레코드 수·체크섬 일치 여부 검증.</div>
+            <div class="step-tools"><span class="step-tool">PHP CLI Script</span><span class="step-tool">Python ETL</span><span class="step-tool">Checksum 검증</span></div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num" style="background:rgba(255,123,40,0.2);color:var(--orange);">04</div>
+          <div class="step-body">
+            <div class="step-title">이미지 파일 S3 일괄 이전</div>
+            <div class="step-desc">기존 서버 디스크의 모든 이미지를 S3 오브젝트 스토리지로 이전. 기사·전시·작가 본문 내 이미지 경로(src) 일괄 치환. CDN URL로 재매핑.</div>
+            <div class="step-tools"><span class="step-tool">AWS CLI / s3cmd</span><span class="step-tool">URL 치환 스크립트</span><span class="step-tool">셀레늄 검증</span></div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num" style="background:rgba(52,211,153,0.2);color:var(--green);">05</div>
+          <div class="step-body">
+            <div class="step-title">최종 검증 및 이관 보고서 제출</div>
+            <div class="step-desc">전체 레코드 수 대조, 이미지 누락 여부, URL 리다이렉트 동작 확인. 이관 검증 보고서 김달진미술연구소에 제출 및 서면 승인.</div>
+            <div class="step-tools"><span class="step-tool">자동화 테스트 스위트</span><span class="step-tool">이관 보고서 (Excel)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 구 DB → 신 DB 스키마 매핑 예시 -->
+      <p class="section-title">스키마 매핑 예시 (전시 테이블)</p>
+      <div class="card" style="padding:0;overflow:hidden;margin-bottom:32px;">
+        <table class="mapping-table">
+          <thead>
+            <tr>
+              <th>구 DB 컬럼명</th>
+              <th>신 DB 컬럼명</th>
+              <th>타입 변환</th>
+              <th>관계</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="old-schema">bbs_exhibition.idx</span></td>
+              <td><span class="new-schema">exhibitions.id</span></td>
+              <td>INT → BIGINT UNSIGNED</td>
+              <td><span class="rel-badge" style="background:rgba(52,211,153,0.1);color:var(--green);">PK</span></td>
+            </tr>
+            <tr>
+              <td><span class="old-schema">bbs_exhibition.subject</span></td>
+              <td><span class="new-schema">exhibitions.title</span></td>
+              <td>VARCHAR(255)</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><span class="old-schema">bbs_exhibition.artist_id</span></td>
+              <td><span class="new-schema">exhibition_artist (pivot)</span></td>
+              <td>INT → Many-to-Many</td>
+              <td><span class="rel-badge" style="background:rgba(167,139,250,0.1);color:var(--purple);">N:M</span></td>
+            </tr>
+            <tr>
+              <td><span class="old-schema">bbs_exhibition.regdate</span></td>
+              <td><span class="new-schema">exhibitions.created_at</span></td>
+              <td>UNIX_TIMESTAMP → DATETIME</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><span class="old-schema">bbs_exhibition.img_path</span></td>
+              <td><span class="new-schema">media.s3_path</span></td>
+              <td>로컬 경로 → S3 URL</td>
+              <td><span class="rel-badge" style="background:rgba(79,156,249,0.1);color:var(--blue);">FK</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warning-box">
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px;">🚨 제안서 필수 포함 (이관 관련)</div>
+        <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.8;">
+          에이전시는 제안서 제출 시 <strong style="color:var(--red);">기존 데이터 마이그레이션에 대한 구체적인 방안과 일정</strong>을 반드시 포함해야 합니다.
+          이관 대상 테이블 목록, 방법론, 검증 절차, 일정 (단계별 WBS)이 포함되지 않은 제안서는 검토 대상에서 제외될 수 있습니다.
+        </p>
+      </div>
+    </main>
+  </div>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
