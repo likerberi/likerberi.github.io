@@ -380,24 +380,9 @@
         </main>
     </div>
 
-    <!-- Inject Museum Data directly -->
+    <!-- Inject Museum Data from Laravel -->
     <script>
-        window.museumData = [
-            {"id":1,"name":"국립현대미술관 서울관","type":"art","lat":37.57861,"lng":126.98006,"address":"서울특별시 종로구 삼청로 30","phone":"02-3701-9500","url":"https://www.mmca.go.kr"},
-            {"id":2,"name":"서울공예박물관","type":"museum","lat":37.57582,"lng":126.98397,"address":"서울특별시 종로구 율곡로3길 4","phone":"02-748-1000","url":"https://sfm.seoul.go.kr"},
-            {"id":3,"name":"국립고궁박물관","type":"museum","lat":37.57683,"lng":126.97485,"address":"서울특별시 종로구 효자로 12","phone":"02-3701-7500","url":"https://www.gogung.go.kr"},
-            {"id":4,"name":"대림미술관","type":"art","lat":37.57805,"lng":126.97349,"address":"서울특별시 종로구 자하문로4길 21","phone":"02-720-0667","url":"https://www.daelimmuseum.org"},
-            {"id":5,"name":"아라리오뮤지엄 인 스페이스","type":"art","lat":37.57602,"lng":126.98585,"address":"서울특별시 종로구 율곡로 83","phone":"02-736-5700","url":"https://www.arariomuseum.org"},
-            {"id":6,"name":"일민미술관","type":"art","lat":37.56981,"lng":126.97782,"address":"서울특별시 종로구 세종대로 152","phone":"02-2020-2050","url":"https://ilmin.org"},
-            {"id":7,"name":"서울역사박물관","type":"museum","lat":37.57074,"lng":126.97081,"address":"서울특별시 종로구 새문안로 55","phone":"02-724-0274","url":"https://museum.seoul.go.kr"},
-            {"id":8,"name":"성곡미술관","type":"art","lat":37.57322,"lng":126.96941,"address":"서울특별시 종로구 경희궁길 42","phone":"02-737-7650","url":"http://www.sungkokartmuseum.org"},
-            {"id":9,"name":"금호미술관","type":"art","lat":37.57905,"lng":126.97956,"address":"서울특별시 종로구 삼청로 18","phone":"02-720-5114","url":"http://www.kumhomuseum.com"},
-            {"id":10,"name":"종로구립 박노수미술관","type":"art","lat":37.58153,"lng":126.96596,"address":"서울특별시 종로구 옥인길 34","phone":"02-2148-4171","url":"https://www.jongno.go.kr/museumMain.do"},
-            {"id":11,"name":"대한민국역사박물관","type":"museum","lat":37.57214,"lng":126.97799,"address":"서울특별시 종로구 세종대로 198","phone":"02-3703-9200","url":"https://www.much.go.kr"},
-            {"id":12,"name":"국립민속박물관","type":"museum","lat":37.57948,"lng":126.97902,"address":"서울특별시 종로구 삼청로 37","phone":"02-3704-3114","url":"https://www.nfm.go.kr"},
-            {"id":13,"name":"환기미술관","type":"art","lat":37.59169,"lng":126.96739,"address":"서울특별시 종로구 자하문로40길 63","phone":"02-391-7701","url":"https://www.whanki.org"},
-            {"id":14,"name":"OCI미술관","type":"art","lat":37.57319,"lng":126.98131,"address":"서울특별시 종로구 우정국로 45-14","phone":"02-734-0440","url":"http://ocimuseum.org"}
-        ];
+        window.museumData = @json($museums);
     </script>
 
     <!-- Main Simple Routing Script -->
