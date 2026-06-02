@@ -1,404 +1,1277 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>김달진미술연구소 · 리뉴얼 기획서</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <style>
-    .hero-banner {
-      background: linear-gradient(135deg, #0d1117 0%, #0a1628 60%, #060d1a 100%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 48px 52px;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 40px;
-    }
-    .hero-banner::before {
-      content: '';
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(79,156,249,0.1) 0%, transparent 70%);
-    }
-    .hero-banner::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; left: 30%;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(0,212,170,0.07) 0%, transparent 70%);
-    }
-    .hero-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 16px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .hero-label::before {
-      content: '';
-      width: 24px; height: 2px;
-      background: var(--blue);
-    }
-    .hero-title {
-      font-size: 42px;
-      font-weight: 900;
-      line-height: 1.2;
-      background: linear-gradient(135deg, #f1f5f9 30%, #4f9cf9 70%, #00d4aa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 12px;
-    }
-    .hero-title em {
-      font-style: normal;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero-subtitle {
-      font-size: 15px;
-      color: var(--text-secondary);
-      max-width: 520px;
-      line-height: 1.75;
-      margin-bottom: 28px;
-    }
-    .hero-meta {
-      display: flex; gap: 24px; flex-wrap: wrap;
-    }
-    .hero-meta-item {
-      display: flex; flex-direction: column; gap: 2px;
-    }
-    .hero-meta-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-    .hero-meta-value {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-    .hero-version {
-      position: absolute;
-      top: 24px; right: 32px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-    /* 빠른 이동 카드 */
-    .nav-card {
-      display: flex;
-      flex-direction: column;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      transition: all var(--transition);
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-    }
-    .nav-card:hover {
-      border-color: var(--border-light);
-      background: var(--bg-card-hover);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-    }
-    .nav-card-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      margin-bottom: 14px;
-      flex-shrink: 0;
-    }
-    .nav-card-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .nav-card-desc {
-      font-size: 12.5px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      flex: 1;
-    }
-    .nav-card-arrow {
-      margin-top: 14px;
-      font-size: 12px;
-      color: var(--blue);
-      font-weight: 600;
-      display: flex; align-items: center; gap: 4px;
-    }
-    /* 폴더 트리 강조 */
-    .tree-root {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--blue);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>종로구 미술관 & 박물관 지도 비교 플랫폼</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #FAF9F6; /* Premium Alabaster / Warm White */
+            --panel-bg: #FFFFFF;
+            --text-main: #1A1A1A;
+            --text-muted: #666666;
+            --border-color: #E5E5E0;
+            --primary: #8C7853; /* Warm Bronze / Gold Accent */
+            --primary-hover: #705F3F;
+            --secondary: #2C3E50;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(140, 120, 83, 0.08);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Map Brand Colors */
+            --google-color: #4285F4;
+            --naver-color: #03C75A;
+            --kakao-color: #FEE500;
+            --kakao-text: #191919;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Navigation */
+        header {
+            background-color: var(--panel-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo-area h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area h1 span {
+            color: var(--primary);
+            font-weight: 300;
+        }
+
+        .logo-area p {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .global-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Custom Switch & Checkbox styling */
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            background: #F4F3EF;
+            padding: 6px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .toggle-container input {
+            display: none;
+        }
+
+        .toggle-slider {
+            width: 36px;
+            height: 20px;
+            background-color: #CCC;
+            border-radius: 20px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: white;
+            top: 3px;
+            left: 3px;
+            transition: var(--transition);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .toggle-container input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        .toggle-container input:checked + .toggle-slider::before {
+            transform: translateX(16px);
+        }
+
+        .btn-api-settings {
+            background-color: var(--text-main);
+            color: #FFF;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-api-settings:hover {
+            background-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        /* Main View Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 77px);
+            position: relative;
+        }
+
+        /* Sidebar: Museum List */
+        .sidebar {
+            width: 360px;
+            background-color: var(--panel-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            transition: var(--transition);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .museum-count {
+            font-size: 12px;
+            font-weight: 500;
+            background-color: #F4F3EF;
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 12px 10px 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #F8F8F6;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            background-color: #FFF;
+            box-shadow: 0 0 0 3px rgba(140, 120, 83, 0.15);
+        }
+
+        .museum-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Custom Scrollbar */
+        .museum-list::-webkit-scrollbar, .modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .museum-list::-webkit-scrollbar-track, .modal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .museum-list::-webkit-scrollbar-thumb, .modal-body::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+        .museum-list::-webkit-scrollbar-thumb:hover, .modal-body::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        .museum-item {
+            padding: 16px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            background-color: #FFF;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .museum-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-1px);
+        }
+
+        .museum-item.active {
+            border-color: var(--primary);
+            background-color: #FAF6EE;
+        }
+
+        .museum-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .museum-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .tag.art {
+            background-color: rgba(140, 120, 83, 0.1);
+            color: var(--primary);
+        }
+
+        .tag.museum {
+            background-color: rgba(44, 62, 80, 0.1);
+            color: var(--secondary);
+        }
+
+        .museum-address {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .museum-meta {
+            font-size: 11px;
+            color: #999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .museum-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .museum-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Maps Container Area */
+        .maps-grid-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background-color: var(--border-color);
+            position: relative;
+        }
+
+        .map-wrapper {
+            background-color: #FFF;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .map-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FFF;
+            z-index: 5;
+        }
+
+        .map-title {
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .map-badge {
+            font-size: 9px;
+            font-weight: 700;
+            color: #FFF;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .map-badge.google { background-color: var(--google-color); }
+        .map-badge.naver { background-color: var(--naver-color); }
+        .map-badge.kakao {
+            background-color: var(--kakao-color);
+            color: var(--kakao-text);
+        }
+
+        .map-view {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .map-status-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(250, 249, 246, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            gap: 12px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .map-status-overlay i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .map-status-overlay p {
+            font-size: 13px;
+            color: var(--text-muted);
+            max-width: 240px;
+            line-height: 1.5;
+        }
+
+        /* Modal Overlay (API Key Config) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background-color: #FFF;
+            width: 100%;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .btn-close-modal {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .btn-close-modal:hover {
+            color: var(--text-main);
+        }
+
+        .modal-body {
+            padding: 28px;
+            max-height: 70vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .api-guide-alert {
+            background-color: rgba(140, 120, 83, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 12px 16px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--primary-hover);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-label {
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .input-label a {
+            font-weight: 400;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .input-label a:hover {
+            text-decoration: underline;
+        }
+
+        .api-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .api-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(140, 120, 83, 0.1);
+        }
+
+        .modal-footer {
+            padding: 20px 28px;
+            border-top: 1px solid var(--border-color);
+            background-color: #FAF9F6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #E5E5E0;
+            color: var(--text-main);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Custom Infowindow styling */
+        .custom-iw {
+            padding: 12px;
+            font-family: 'Noto Sans KR', sans-serif;
+            max-width: 220px;
+        }
+        .custom-iw-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+        .custom-iw-addr {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+        .custom-iw-phone {
+            font-size: 10px;
+            color: var(--primary);
+        }
+
+        /* Responsive styling */
+        @media (max-width: 1024px) {
+            .maps-grid-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 1fr);
+                overflow-y: auto;
+            }
+            .app-container {
+                flex-direction: column-reverse;
+                height: auto;
+                overflow: visible;
+            }
+            .sidebar {
+                width: 100%;
+                height: 350px;
+                border-right: none;
+                border-top: 1px solid var(--border-color);
+            }
+            body {
+                overflow: auto;
+                height: auto;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="glow-bg glow-1"></div>
-  <div class="glow-bg glow-2"></div>
 
-  <button class="menu-btn" aria-label="메뉴 열기">☰</button>
-
-  <div class="layout">
-    <!-- 사이드바 -->
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <div class="site-name">DALJIN.COM</div>
-        <div class="site-sub">리뉴얼 기획서 v1.0</div>
-      </div>
-      <div class="sidebar-label">메뉴</div>
-      <nav>
-        <ul class="nav-list">
-          <li class="nav-item">
-            <a href="index.html">
-              <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 5.5A2 2 0 014 3.5h8a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2v-7zm2-1a1 1 0 00-1 1V12.5a1 1 0 001 1h8a1 1 0 001-1V5.5a1 1 0 00-1-1H4z"/></svg>
-              대시보드
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/overview.html">
-              <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zM0 8a8 8 0 1116 0A8 8 0 010 8zm9-3.5a1 1 0 11-2 0 1 1 0 012 0zM6.75 7.5a.75.75 0 000 1.5H7.5v2.25h-.75a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5H8.5V7.5h-1.75z"/></svg>
-              핵심 목표
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/tech-stack.html">
-              <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M4.75 1a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V1.75a.75.75 0 00-.75-.75h-6.5zm0 1.5h6.5V2.5H4.75V2.5zm0 1.5h6.5v8h-6.5v-8z"/></svg>
-              기술 스택
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/infrastructure.html">
-              <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1.5 2.5a1 1 0 011-1h11a1 1 0 011 1v3a1 1 0 01-1 1H2.5a1 1 0 01-1-1v-3zm1 .5v2h11V3h-11zm-1 5a1 1 0 011-1h11a1 1 0 011 1v3a1 1 0 01-1 1H2.5a1 1 0 01-1-1v-3zm1 .5v2h11V9h-11zm5.5 4.25a.75.75 0 01.75-.75h4a.75.75 0 010 1.5h-4a.75.75 0 01-.75-.75z"/></svg>
-              인프라 구조
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/migration.html">
-              <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2.75A.75.75 0 012.75 2h10.5a.75.75 0 010 1.5H2.75A.75.75 0 012 2.75zm0 5A.75.75 0 012.75 7h10.5a.75.75 0 010 1.5H2.75A.75.75 0 012 7.75zM2.75 12a.75.75 0 000 1.5h10.5a.75.75 0 000-1.5H2.75z"/></svg>
-              데이터 마이그레이션
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/ownership.html">
-              <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 2.5a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0zM8 1a1.5 1.5 0 100 3A1.5 1.5 0 008 1zM11.5 13h-7c-.28 0-.5-.22-.5-.5C4 10.57 5.79 9 8 9s4 1.57 4 3.5c0 .28-.22.5-.5.5zm-7-1.5h7c-.28-1.1-1.5-1.5-3.5-1.5s-3.22.4-3.5 1.5z"/></svg>
-              소유권 관리
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/milestone.html">
-              <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M4.75 2a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm-2 3a.75.75 0 000 1.5h10.5a.75.75 0 000-1.5H2.75zm-1 3.75a.75.75 0 01.75-.75h12.5a.75.75 0 010 1.5H2.5a.75.75 0 01-.75-.75zm.75 3.75a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5H2.5z"/></svg>
-              마일스톤
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="sidebar-footer">
-        기준일: <span id="current-date">2026년 3월 4일</span>
-      </div>
-    </aside>
-
-    <!-- 메인 콘텐츠 -->
-    <main class="main-content">
-
-      <!-- 히어로 배너 -->
-      <div class="hero-banner">
-        <div class="hero-version">v1.0.0 · 2026.03</div>
-        <div class="hero-label">Project Proposal</div>
-        <h1 class="hero-title">김달진미술연구소<br>웹사이트 리뉴얼</h1>
-        <p class="hero-subtitle">
-          daljin.com의 레거시 PHP 구조를 해체하고, Next.js + Laravel 풀스택 아키텍처 기반의
-          모던 플랫폼으로 재구축하기 위한 핵심 요구사항 및 기술 기획서입니다.
-        </p>
-        <div class="hero-meta">
-          <div class="hero-meta-item">
-            <span class="hero-meta-label">클라이언트</span>
-            <span class="hero-meta-value">김달진미술연구소</span>
-          </div>
-          <div class="hero-meta-item">
-            <span class="hero-meta-label">사이트</span>
-            <span class="hero-meta-value">daljin.com</span>
-          </div>
-          <div class="hero-meta-item">
-            <span class="hero-meta-label">문서 유형</span>
-            <span class="hero-meta-value">기술 기획서 (RFP)</span>
-          </div>
-          <div class="hero-meta-item">
-            <span class="hero-meta-label">작성일</span>
-            <span class="hero-meta-value" id="current-date2">2026년 3월 4일</span>
-          </div>
+    <header>
+        <div class="logo-area">
+            <h1>Art & History <span>Map Comparer</span></h1>
+            <p>Jongno-gu Art Galleries & Museums (Google, Naver, Kakao)</p>
         </div>
-      </div>
-
-      <!-- 핵심 수치 -->
-      <p class="section-title">프로젝트 규모</p>
-      <div class="grid-4" style="margin-bottom:40px;">
-        <div class="stat-card">
-          <div class="stat-number" data-target="30" data-suffix="년+" style="color:var(--blue);">—</div>
-          <div class="stat-label">축적 아카이브 연혁</div>
+        <div class="global-controls">
+            <div class="control-group">
+                <label class="toggle-container" id="syncToggleLabel">
+                    <input type="checkbox" id="sync-maps" checked>
+                    <div class="toggle-slider"></div>
+                    <span>지도 화면 동기화</span>
+                </label>
+                <label class="toggle-container">
+                    <input type="checkbox" id="enable-clustering" checked>
+                    <div class="toggle-slider"></div>
+                    <span>마커 클러스터</span>
+                </label>
+            </div>
+            <button class="btn-api-settings" onclick="openModal()">
+                <i class="fa-solid fa-key"></i> API 키 설정
+            </button>
         </div>
-        <div class="stat-card">
-          <div class="stat-number" data-target="4" data-suffix="개" style="color:var(--teal);">—</div>
-          <div class="stat-label">핵심 요구영역</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-target="8" data-suffix="개월" style="color:var(--purple);">—</div>
-          <div class="stat-label">예상 총 개발 기간</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-target="100" data-suffix="%" style="color:var(--orange);">—</div>
-          <div class="stat-label">데이터 이관 목표</div>
-        </div>
-      </div>
+    </header>
 
-      <!-- 섹션 빠른 이동 -->
-      <p class="section-title">섹션 바로가기</p>
-      <div class="grid-3" style="margin-bottom:40px;">
-        <a href="pages/overview.html" class="nav-card">
-          <div class="nav-card-icon" style="background:rgba(79,156,249,0.15);">🎯</div>
-          <div class="nav-card-title">핵심 목표</div>
-          <div class="nav-card-desc">레거시 청산, SEO 극대화, 프론트/백 분리 아키텍처 목표 상세 설명</div>
-          <div class="nav-card-arrow">바로가기 →</div>
-        </a>
-        <a href="pages/tech-stack.html" class="nav-card">
-          <div class="nav-card-icon" style="background:rgba(0,212,170,0.15);">⚙️</div>
-          <div class="nav-card-title">기술 스택</div>
-          <div class="nav-card-desc">Next.js, Laravel, MySQL Managed DB, CDN 등 기술 선택 근거</div>
-          <div class="nav-card-arrow">바로가기 →</div>
-        </a>
-        <a href="pages/infrastructure.html" class="nav-card">
-          <div class="nav-card-icon" style="background:rgba(167,139,250,0.15);">🏗️</div>
-          <div class="nav-card-title">인프라 구조도</div>
-          <div class="nav-card-desc">하이브리드 클라우드 아키텍처 레이어 다이어그램 및 흐름도</div>
-          <div class="nav-card-arrow">바로가기 →</div>
-        </a>
-        <a href="pages/migration.html" class="nav-card">
-          <div class="nav-card-icon" style="background:rgba(251,191,36,0.15);">📦</div>
-          <div class="nav-card-title">데이터 마이그레이션</div>
-          <div class="nav-card-desc">수십 년 치 아카이브 데이터의 100% 무손실 이관 전략</div>
-          <div class="nav-card-arrow">바로가기 →</div>
-        </a>
-        <a href="pages/ownership.html" class="nav-card">
-          <div class="nav-card-icon" style="background:rgba(248,113,113,0.15);">🔐</div>
-          <div class="nav-card-title">소유권 관리</div>
-          <div class="nav-card-desc">인프라 명의 원칙, 에이전시 권한 분리, 계정 관리 정책</div>
-          <div class="nav-card-arrow">바로가기 →</div>
-        </a>
-        <a href="pages/milestone.html" class="nav-card">
-          <div class="nav-card-icon" style="background:rgba(52,211,153,0.15);">📅</div>
-          <div class="nav-card-title">마일스톤</div>
-          <div class="nav-card-desc">8개월 개발 일정 및 단계별 산출물, 검수 체크포인트</div>
-          <div class="nav-card-arrow">바로가기 →</div>
-        </a>
-      </div>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">
+                    전시 공간 목록
+                    <span class="museum-count" id="list-count">0</span>
+                </div>
+                <div class="search-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="search-bar" class="search-input" placeholder="이름 또는 주소로 검색...">
+                </div>
+            </div>
+            <div class="museum-list" id="museum-list-container">
+                <!-- Dynamically Rendered -->
+            </div>
+        </aside>
 
-      <!-- 프로젝트 폴더 구조 -->
-      <p class="section-title">프로젝트 문서 구조</p>
-      <div class="folder-tree" style="margin-bottom:40px;">
-        <div class="tree-line"><span class="tree-root">📁 daljin-renewal/</span><span class="tree-comment">── 프로젝트 루트</span></div>
-        <div class="tree-line"><span class="tree-indent">│</span></div>
-        <div class="tree-line"><span class="tree-indent">├──</span> <span class="tree-folder">📁 frontend/</span><span class="tree-comment">── Next.js 프론트엔드</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 app/</span><span class="tree-comment">── App Router 페이지</span></div>
-        <div class="tree-line"><span class="tree-indent">│   │   ├──</span> <span class="tree-folder">📁 (public)/</span><span class="tree-comment">── 공개 라우트 그룹</span></div>
-        <div class="tree-line"><span class="tree-indent">│   │   │   ├──</span> <span class="tree-folder">📁 exhibitions/</span><span class="tree-comment">── 전시 목록/상세</span></div>
-        <div class="tree-line"><span class="tree-indent">│   │   │   ├──</span> <span class="tree-folder">📁 artists/</span><span class="tree-comment">── 작가 프로필</span></div>
-        <div class="tree-line"><span class="tree-indent">│   │   │   ├──</span> <span class="tree-folder">📁 archives/</span><span class="tree-comment">── 기사/자료 아카이브</span></div>
-        <div class="tree-line"><span class="tree-indent">│   │   │   └──</span> <span class="tree-folder">📁 museums/</span><span class="tree-comment">── 박물관 정보</span></div>
-        <div class="tree-line"><span class="tree-indent">│   │   └──</span> <span class="tree-folder">📁 (admin)/</span><span class="tree-comment">── 관리자 라우트 그룹</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 components/</span><span class="tree-comment">── 재사용 컴포넌트</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 public/</span><span class="tree-comment">── 정적 파일 (CDN 제외)</span></div>
-        <div class="tree-line"><span class="tree-indent">│   └──</span> <span class="tree-file json">📄 next.config.js</span></div>
-        <div class="tree-line"><span class="tree-indent">│</span></div>
-        <div class="tree-line"><span class="tree-indent">├──</span> <span class="tree-folder">📁 backend/</span><span class="tree-comment">── Laravel API 서버</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 app/</span></div>
-        <div class="tree-line"><span class="tree-indent">│   │   ├──</span> <span class="tree-folder">📁 Http/Controllers/Api/</span><span class="tree-comment">── API 컨트롤러</span></div>
-        <div class="tree-line"><span class="tree-indent">│   │   ├──</span> <span class="tree-folder">📁 Models/</span><span class="tree-comment">── Eloquent 모델</span></div>
-        <div class="tree-line"><span class="tree-indent">│   │   └──</span> <span class="tree-folder">📁 Services/</span><span class="tree-comment">── 비즈니스 로직</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 database/migrations/</span><span class="tree-comment">── DB 스키마</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 routes/</span></div>
-        <div class="tree-line"><span class="tree-indent">│   └──</span> <span class="tree-file env">📄 .env</span><span class="tree-comment">── 환경변수 (git 제외)</span></div>
-        <div class="tree-line"><span class="tree-indent">│</span></div>
-        <div class="tree-line"><span class="tree-indent">├──</span> <span class="tree-folder">📁 migration/</span><span class="tree-comment">── 데이터 이관 스크립트</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 scripts/</span><span class="tree-comment">── Python/PHP 추출 스크립트</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 schemas/</span><span class="tree-comment">── 구 DB → 신 DB 매핑표</span></div>
-        <div class="tree-line"><span class="tree-indent">│   └──</span> <span class="tree-folder">📁 reports/</span><span class="tree-comment">── 이관 검증 보고서</span></div>
-        <div class="tree-line"><span class="tree-indent">│</span></div>
-        <div class="tree-line"><span class="tree-indent">├──</span> <span class="tree-folder">📁 infra/</span><span class="tree-comment">── 인프라 설정</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 docker/</span><span class="tree-comment">── Docker Compose 로컬 개발</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-folder">📁 nginx/</span><span class="tree-comment">── Nginx 리버스 프록시</span></div>
-        <div class="tree-line"><span class="tree-indent">│   └──</span> <span class="tree-folder">📁 ci-cd/</span><span class="tree-comment">── GitHub Actions 워크플로우</span></div>
-        <div class="tree-line"><span class="tree-indent">│</span></div>
-        <div class="tree-line"><span class="tree-indent">├──</span> <span class="tree-folder">📁 docs/</span><span class="tree-comment">── 이 기획서 문서</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-file md">📄 overview.md</span></div>
-        <div class="tree-line"><span class="tree-indent">│   ├──</span> <span class="tree-file md">📄 tech-stack.md</span></div>
-        <div class="tree-line"><span class="tree-indent">│   └──</span> <span class="tree-file md">📄 milestone.md</span></div>
-        <div class="tree-line"><span class="tree-indent">│</span></div>
-        <div class="tree-line"><span class="tree-indent">└──</span> <span class="tree-file md">📄 README.md</span><span class="tree-comment">── 프로젝트 개요</span></div>
-      </div>
+        <!-- Maps Grid -->
+        <main class="maps-grid-container">
+            <!-- Google Maps -->
+            <div class="map-wrapper">
+                <div class="map-header">
+                    <div class="map-title">
+                        <span class="map-badge google">Google</span> Google Maps
+                    </div>
+                </div>
+                <div class="map-view" id="google-map">
+                    <div class="map-status-overlay" id="google-overlay">
+                        <i class="fa-solid fa-lock"></i>
+                        <p>Google Maps API Key가 설정되지 않았습니다. 상단의 'API 키 설정'에서 키를 입력해 주세요.</p>
+                    </div>
+                </div>
+            </div>
 
-      <!-- 핵심 규칙 요약 -->
-      <p class="section-title">절대 원칙 요약</p>
-      <div class="grid-2">
-        <div class="warning-box">
-          <div class="card-title" style="font-size:14px; margin-bottom:10px;">⛔ 하면 안 되는 것</div>
-          <ul class="checklist">
-            <li>
-              <svg class="check-icon" viewBox="0 0 16 16" fill="var(--red)"><circle cx="8" cy="8" r="7"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-              서버 하드디스크에 이미지 직접 저장
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 16 16" fill="var(--red)"><circle cx="8" cy="8" r="7"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-              인프라 계정 명의를 에이전시 명으로 생성
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 16 16" fill="var(--red)"><circle cx="8" cy="8" r="7"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-              기존 데이터 부분 이관 (100% 이관 필수)
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 16 16" fill="var(--red)"><circle cx="8" cy="8" r="7"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-              CDN 없이 이미지 직접 서비스
-            </li>
-          </ul>
+            <!-- Naver Maps -->
+            <div class="map-wrapper">
+                <div class="map-header">
+                    <div class="map-title">
+                        <span class="map-badge naver">Naver</span> Naver Maps v3
+                    </div>
+                </div>
+                <div class="map-view" id="naver-map">
+                    <div class="map-status-overlay" id="naver-overlay">
+                        <i class="fa-solid fa-lock"></i>
+                        <p>Naver Maps Client ID가 설정되지 않았습니다. 상단의 'API 키 설정'에서 키를 입력해 주세요.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kakao Maps -->
+            <div class="map-wrapper">
+                <div class="map-header">
+                    <div class="map-title">
+                        <span class="map-badge kakao">Kakao</span> Kakao Maps
+                    </div>
+                </div>
+                <div class="map-view" id="kakao-map">
+                    <div class="map-status-overlay" id="kakao-overlay">
+                        <i class="fa-solid fa-lock"></i>
+                        <p>Kakao Maps App Key가 설정되지 않았습니다. 상단의 'API 키 설정'에서 키를 입력해 주세요.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- API Setup Modal -->
+    <div class="modal-overlay" id="api-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>API 설정 및 승인</h2>
+                <button class="btn-close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="api-guide-alert">
+                    본 서비스는 클라이언트 단에서 직접 Google, Naver, Kakao 지도 API를 호출합니다. 입력하신 키는 서버에 저장되지 않고 브라우저(localStorage)에 안전하게 암호화 보관됩니다.
+                </div>
+                
+                <!-- Google Maps Key -->
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Google Maps API Key</span>
+                        <a href="https://console.cloud.google.com/google/maps-apis/overview" target="_blank" rel="noopener noreferrer">발급받기 <i class="fa-solid fa-up-right-from-square"></i></a>
+                    </div>
+                    <input type="password" id="key-google" class="api-input" placeholder="AIzaSy...">
+                </div>
+
+                <!-- Naver Maps Client ID -->
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Naver Maps Client ID</span>
+                        <a href="https://console.ncloud.com/naver-service/application" target="_blank" rel="noopener noreferrer">발급받기 <i class="fa-solid fa-up-right-from-square"></i></a>
+                    </div>
+                    <input type="password" id="key-naver" class="api-input" placeholder="Client ID 입력 (Web Dynamic Map 용)">
+                </div>
+
+                <!-- Kakao Maps App Key -->
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Kakao Maps JavaScript Key</span>
+                        <a href="https://developers.kakao.com/console/app" target="_blank" rel="noopener noreferrer">발급받기 <i class="fa-solid fa-up-right-from-square"></i></a>
+                    </div>
+                    <input type="password" id="key-kakao" class="api-input" placeholder="JavaScript 키 입력">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+                <button class="btn btn-primary" onclick="saveApiKeys()">저장 후 지도 활성화</button>
+            </div>
         </div>
-        <div class="success-box">
-          <div class="card-title" style="font-size:14px; margin-bottom:10px;">✅ 반드시 해야 하는 것</div>
-          <ul class="checklist">
-            <li>
-              <svg class="check-icon" viewBox="0 0 16 16" fill="var(--green)"><circle cx="8" cy="8" r="7"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              오브젝트 스토리지(S3) + Global CDN 구성
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 16 16" fill="var(--green)"><circle cx="8" cy="8" r="7"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Managed DB (자동 백업 지원) 사용
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 16 16" fill="var(--green)"><circle cx="8" cy="8" r="7"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              모든 계정 명의 = 김달진미술연구소
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 16 16" fill="var(--green)"><circle cx="8" cy="8" r="7"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              제안서에 마이그레이션 방안·일정 명기
-            </li>
-          </ul>
-        </div>
-      </div>
+    </div>
 
-    </main>
-  </div>
+    <!-- Inject Museum Data from Laravel -->
+    <script>
+        window.museumData = [{"id":1,"name":"\uad6d\ub9bd\ud604\ub300\ubbf8\uc220\uad00 \uc11c\uc6b8\uad00","type":"art","lat":37.57861,"lng":126.98006,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc0bc\uccad\ub85c 30","phone":"02-3701-9500","url":"https:\/\/www.mmca.go.kr"},{"id":2,"name":"\uc11c\uc6b8\uacf5\uc608\ubc15\ubb3c\uad00","type":"museum","lat":37.57582,"lng":126.98397,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc728\uace1\ub85c3\uae38 4","phone":"02-748-1000","url":"https:\/\/sfm.seoul.go.kr"},{"id":3,"name":"\uad6d\ub9bd\uace0\uad81\ubc15\ubb3c\uad00","type":"museum","lat":37.57683,"lng":126.97485,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \ud6a8\uc790\ub85c 12","phone":"02-3701-7500","url":"https:\/\/www.gogung.go.kr"},{"id":4,"name":"\ub300\ub9bc\ubbf8\uc220\uad00","type":"art","lat":37.57805,"lng":126.97349,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc790\ud558\ubb38\ub85c4\uae38 21","phone":"02-720-0667","url":"https:\/\/www.daelimmuseum.org"},{"id":5,"name":"\uc544\ub77c\ub9ac\uc624\ubba4\uc9c0\uc5c4 \uc778 \uc2a4\ud398\uc774\uc2a4","type":"art","lat":37.57602,"lng":126.98585,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc728\uace1\ub85c 83","phone":"02-736-5700","url":"https:\/\/www.arariomuseum.org"},{"id":6,"name":"\uc77c\ubbfc\ubbf8\uc220\uad00","type":"art","lat":37.56981,"lng":126.97782,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc138\uc885\ub300\ub85c 152","phone":"02-2020-2050","url":"https:\/\/ilmin.org"},{"id":7,"name":"\uc11c\uc6b8\uc5ed\uc0ac\ubc15\ubb3c\uad00","type":"museum","lat":37.57074,"lng":126.97081,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc0c8\ubb38\uc548\ub85c 55","phone":"02-724-0274","url":"https:\/\/museum.seoul.go.kr"},{"id":8,"name":"\uc131\uace1\ubbf8\uc220\uad00","type":"art","lat":37.57322,"lng":126.96941,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uacbd\ud76c\uad81\uae38 42","phone":"02-737-7650","url":"http:\/\/www.sungkokartmuseum.org"},{"id":9,"name":"\uae08\ud638\ubbf8\uc220\uad00","type":"art","lat":37.57905,"lng":126.97956,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc0bc\uccad\ub85c 18","phone":"02-720-5114","url":"http:\/\/www.kumhomuseum.com"},{"id":10,"name":"\uc885\ub85c\uad6c\ub9bd \ubc15\ub178\uc218\ubbf8\uc220\uad00","type":"art","lat":37.58153,"lng":126.96596,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc625\uc778\uae38 34","phone":"02-2148-4171","url":"https:\/\/www.jongno.go.kr\/museumMain.do"},{"id":11,"name":"\ub300\ud55c\ubbfc\uad6d\uc5ed\uc0ac\ubc15\ubb3c\uad00","type":"museum","lat":37.57214,"lng":126.97799,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc138\uc885\ub300\ub85c 198","phone":"02-3703-9200","url":"https:\/\/www.much.go.kr"},{"id":12,"name":"\uad6d\ub9bd\ubbfc\uc18d\ubc15\ubb3c\uad00","type":"museum","lat":37.57948,"lng":126.97902,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc0bc\uccad\ub85c 37","phone":"02-3704-3114","url":"https:\/\/www.nfm.go.kr"},{"id":13,"name":"\ud658\uae30\ubbf8\uc220\uad00","type":"art","lat":37.59169,"lng":126.96739,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc790\ud558\ubb38\ub85c40\uae38 63","phone":"02-391-7701","url":"https:\/\/www.whanki.org"},{"id":14,"name":"OCI\ubbf8\uc220\uad00","type":"art","lat":37.57319,"lng":126.98131,"address":"\uc11c\uc6b8\ud2b9\ubcc4\uc2dc \uc885\ub85c\uad6c \uc6b0\uc815\uad6d\ub85c 45-14","phone":"02-734-0440","url":"http:\/\/ocimuseum.org"}];
+    </script>
 
-  <script src="assets/js/main.js"></script>
-  <script>
-    // hero-meta date 동기화
-    document.getElementById('current-date2').textContent = document.getElementById('current-date').textContent;
-  </script>
+    <!-- Main Logic Script -->
+    <script>
+        // Map instances and markers
+        let maps = { google: null, naver: null, kakao: null };
+        let markers = { google: [], naver: [], kakao: [] };
+        let clusterers = { google: null, naver: null, kakao: null };
+        let infoWindows = { google: null, naver: null, kakao: null };
+        let activeMarkerIndex = null;
+        let isSyncing = false; // Flag to prevent infinite cascade when syncing maps
+        
+        // Initial coordinates (Center of Jongno-gu Museum cluster: MMCA Seoul area)
+        const initCenter = { lat: 37.5768, lng: 126.9790 };
+        const initZoom = 14;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMuseumList(window.museumData);
+            checkAndLoadMaps();
+            
+            // Search function
+            document.getElementById('search-bar').addEventListener('input', (e) => {
+                const keyword = e.target.value.toLowerCase();
+                const filtered = window.museumData.filter(m => 
+                    m.name.toLowerCase().includes(keyword) || 
+                    m.address.toLowerCase().includes(keyword)
+                );
+                renderMuseumList(filtered);
+            });
+
+            // Toggle Clustering event
+            document.getElementById('enable-clustering').addEventListener('change', (e) => {
+                toggleClustering(e.target.checked);
+            });
+        });
+
+        // Modal Controls
+        function openModal() {
+            document.getElementById('key-google').value = localStorage.getItem('api_key_google') || '';
+            document.getElementById('key-naver').value = localStorage.getItem('api_key_naver') || '';
+            document.getElementById('key-kakao').value = localStorage.getItem('api_key_kakao') || '';
+            document.getElementById('api-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('api-modal').classList.remove('active');
+        }
+
+        function saveApiKeys() {
+            const googleKey = document.getElementById('key-google').value.trim();
+            const naverKey = document.getElementById('key-naver').value.trim();
+            const kakaoKey = document.getElementById('key-kakao').value.trim();
+
+            if (googleKey) localStorage.setItem('api_key_google', googleKey);
+            else localStorage.removeItem('api_key_google');
+
+            if (naverKey) localStorage.setItem('api_key_naver', naverKey);
+            else localStorage.removeItem('api_key_naver');
+
+            if (kakaoKey) localStorage.setItem('api_key_kakao', kakaoKey);
+            else localStorage.removeItem('api_key_kakao');
+
+            closeModal();
+            location.reload(); // Reload to inject updated scripts
+        }
+
+        // Map script loading
+        function checkAndLoadMaps() {
+            const googleKey = localStorage.getItem('api_key_google');
+            const naverKey = localStorage.getItem('api_key_naver');
+            const kakaoKey = localStorage.getItem('api_key_kakao');
+
+            let missingKeys = [];
+            if (!googleKey) missingKeys.push('Google');
+            if (!naverKey) missingKeys.push('Naver');
+            if (!kakaoKey) missingKeys.push('Kakao');
+
+            if (missingKeys.length > 0) {
+                // Open modal automatically on first entry if keys are missing
+                setTimeout(openModal, 800);
+            }
+
+            // Load available maps
+            if (googleKey) {
+                document.getElementById('google-overlay').style.display = 'none';
+                loadGoogleScript(googleKey);
+            }
+            if (naverKey) {
+                document.getElementById('naver-overlay').style.display = 'none';
+                loadNaverScript(naverKey);
+            }
+            if (kakaoKey) {
+                document.getElementById('kakao-overlay').style.display = 'none';
+                loadKakaoScript(kakaoKey);
+            }
+        }
+
+        function loadGoogleScript(key) {
+            // Load Maps main script
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&callback=initGoogleMap&v=weekly`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+
+            // Load Marker Clusterer CDN
+            const clusterScript = document.createElement('script');
+            clusterScript.src = "https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js";
+            document.head.appendChild(clusterScript);
+        }
+
+        function loadNaverScript(key) {
+            const script = document.createElement('script');
+            script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${key}`;
+            script.onload = () => {
+                // Load Naver Marker Clustering script
+                const clusterScript = document.createElement('script');
+                clusterScript.src = "https://navermaps.github.io/maps.js.ncp/docs/js/MarkerClustering.js";
+                clusterScript.onload = () => {
+                    initNaverMap();
+                };
+                document.head.appendChild(clusterScript);
+            };
+            document.head.appendChild(script);
+        }
+
+        function loadKakaoScript(key) {
+            const script = document.createElement('script');
+            script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${key}&libraries=clusterer&autoload=false`;
+            script.onload = () => {
+                kakao.maps.load(() => {
+                    initKakaoMap();
+                });
+            };
+            document.head.appendChild(script);
+        }
+
+        // --- GOOGLE MAPS INITIALIZATION ---
+        window.initGoogleMap = function() {
+            const mapOptions = {
+                center: initCenter,
+                zoom: initZoom,
+                mapTypeControl: true,
+                gestureHandling: 'greedy'
+            };
+            maps.google = new google.maps.Map(document.getElementById('google-map'), mapOptions);
+            infoWindows.google = new google.maps.InfoWindow();
+
+            // Setup Markers
+            window.museumData.forEach((m, idx) => {
+                const marker = new google.maps.Marker({
+                    position: { lat: m.lat, lng: m.lng },
+                    title: m.name,
+                    map: maps.google
+                });
+                
+                marker.addListener('click', () => {
+                    selectMuseum(idx, true);
+                });
+                
+                markers.google.push(marker);
+            });
+
+            // Initialize Clustering if enabled
+            if (document.getElementById('enable-clustering').checked) {
+                initGoogleClustering();
+            }
+
+            // Sync Event
+            maps.google.addListener('bounds_changed', () => {
+                if (!isSyncing && document.getElementById('sync-maps').checked) {
+                    isSyncing = true;
+                    const center = maps.google.getCenter();
+                    const zoom = maps.google.getZoom();
+                    syncAllMaps('google', center.lat(), center.lng(), zoom);
+                    isSyncing = false;
+                }
+            });
+        };
+
+        function initGoogleClustering() {
+            if (typeof markerClusterer !== 'undefined' && maps.google) {
+                clusterers.google = new markerClusterer.MarkerClusterer({
+                    map: maps.google,
+                    markers: markers.google
+                });
+            }
+        }
+
+        // --- NAVER MAPS INITIALIZATION ---
+        function initNaverMap() {
+            const mapOptions = {
+                center: new naver.maps.LatLng(initCenter.lat, initCenter.lng),
+                zoom: initZoom,
+                mapTypeControl: true
+            };
+            maps.naver = new naver.maps.Map('naver-map', mapOptions);
+            infoWindows.naver = new naver.maps.InfoWindow({
+                anchorSkew: true
+            });
+
+            // Setup Markers
+            window.museumData.forEach((m, idx) => {
+                const marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(m.lat, m.lng),
+                    title: m.name,
+                    map: maps.naver
+                });
+
+                naver.maps.Event.addListener(marker, 'click', () => {
+                    selectMuseum(idx, true);
+                });
+
+                markers.naver.push(marker);
+            });
+
+            // Initialize Clustering
+            if (document.getElementById('enable-clustering').checked) {
+                initNaverClustering();
+            }
+
+            // Sync Event
+            naver.maps.Event.addListener(maps.naver, 'bounds_changed', () => {
+                if (!isSyncing && document.getElementById('sync-maps').checked) {
+                    isSyncing = true;
+                    const center = maps.naver.getCenter();
+                    const zoom = maps.naver.getZoom();
+                    syncAllMaps('naver', center.lat(), center.lng(), zoom);
+                    isSyncing = false;
+                }
+            });
+        }
+
+        function initNaverClustering() {
+            if (typeof MarkerClustering !== 'undefined' && maps.naver) {
+                clusterers.naver = new MarkerClustering({
+                    minClusterSize: 2,
+                    maxZoom: 13,
+                    map: maps.naver,
+                    markers: markers.naver,
+                    disableClickZoom: false,
+                    gridSize: 120,
+                    icons: [
+                        {
+                            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:11px;color:#fff;text-align:center;background:rgba(3,199,90,0.85);border:2px solid #fff;border-radius:50%;font-weight:bold;">1</div>',
+                            size: new naver.maps.Size(40, 40),
+                            anchor: new naver.maps.Point(20, 20)
+                        }
+                    ],
+                    indexGenerator: [10, 100, 200, 500, 1000],
+                    stylingFunction: (clusterMarker, count) => {
+                        clusterMarker.getElement().querySelector('div').textContent = count;
+                    }
+                });
+            }
+        }
+
+        // --- KAKAO MAPS INITIALIZATION ---
+        function initKakaoMap() {
+            const container = document.getElementById('kakao-map');
+            const options = {
+                center: new kakao.maps.LatLng(initCenter.lat, initCenter.lng),
+                level: 14 - initZoom + 1 // Zoom conversions
+            };
+            maps.kakao = new kakao.maps.Map(container, options);
+            infoWindows.kakao = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+            // Set map controls
+            const mapTypeControl = new kakao.maps.MapTypeControl();
+            maps.kakao.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+            // Setup Markers
+            window.museumData.forEach((m, idx) => {
+                const marker = new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(m.lat, m.lng),
+                    title: m.name
+                });
+
+                kakao.maps.Event.addListener(marker, 'click', () => {
+                    selectMuseum(idx, true);
+                });
+
+                markers.kakao.push(marker);
+                marker.setMap(maps.kakao);
+            });
+
+            // Initialize Clustering
+            if (document.getElementById('enable-clustering').checked) {
+                initKakaoClustering();
+            }
+
+            // Sync Event
+            kakao.maps.Event.addListener(maps.kakao, 'bounds_changed', () => {
+                if (!isSyncing && document.getElementById('sync-maps').checked) {
+                    isSyncing = true;
+                    const center = maps.kakao.getCenter();
+                    const level = maps.kakao.getLevel();
+                    const googleZoom = 14 - level + 1; // Map zoom translation
+                    syncAllMaps('kakao', center.getLat(), center.getLng(), googleZoom);
+                    isSyncing = false;
+                }
+            });
+        }
+
+        function initKakaoClustering() {
+            if (maps.kakao) {
+                clusterers.kakao = new kakao.maps.MarkerClusterer({
+                    map: maps.kakao,
+                    averageCenter: true,
+                    minLevel: 6,
+                    styles: [{
+                        width: '40px', height: '40px',
+                        background: 'rgba(254, 229, 0, 0.9)',
+                        color: '#191919',
+                        border: '2px solid #191919',
+                        borderRadius: '50%',
+                        textAlign: 'center',
+                        lineHeight: '38px',
+                        fontWeight: 'bold',
+                        fontSize: '12px'
+                    }]
+                });
+                clusterers.kakao.addMarkers(markers.kakao);
+            }
+        }
+
+        // --- MAP SYNC AND MOVEMENT LOGIC ---
+        function syncAllMaps(source, lat, lng, zoom) {
+            // Google
+            if (source !== 'google' && maps.google) {
+                maps.google.setCenter({ lat: lat, lng: lng });
+                maps.google.setZoom(zoom);
+            }
+            // Naver
+            if (source !== 'naver' && maps.naver) {
+                maps.naver.setCenter(new naver.maps.LatLng(lat, lng));
+                maps.naver.setZoom(zoom);
+            }
+            // Kakao
+            if (source !== 'kakao' && maps.kakao) {
+                maps.kakao.setCenter(new kakao.maps.LatLng(lat, lng));
+                maps.kakao.setLevel(14 - zoom + 1);
+            }
+        }
+
+        // Toggle clustering on/off
+        function toggleClustering(enable) {
+            // Google
+            if (clusterers.google) {
+                clusterers.google.clearMarkers();
+                if (enable) {
+                    clusterers.google.addMarkers(markers.google);
+                } else {
+                    markers.google.forEach(m => m.setMap(maps.google));
+                }
+            } else if (enable && maps.google) {
+                initGoogleClustering();
+            }
+
+            // Naver
+            if (clusterers.naver) {
+                clusterers.naver.setMap(null);
+                clusterers.naver = null;
+            }
+            if (enable) {
+                initNaverClustering();
+            } else {
+                markers.naver.forEach(m => m.setMap(maps.naver));
+            }
+
+            // Kakao
+            if (clusterers.kakao) {
+                clusterers.kakao.clear();
+            }
+            if (enable) {
+                initKakaoClustering();
+            } else {
+                markers.kakao.forEach(m => m.setMap(maps.kakao));
+            }
+        }
+
+        // --- SIDEBAR LIST RENDER & SELECTION ---
+        function renderMuseumList(data) {
+            const container = document.getElementById('museum-list-container');
+            container.innerHTML = '';
+            document.getElementById('list-count').textContent = data.length;
+
+            data.forEach((m) => {
+                // Find index in global museumData list
+                const originalIndex = window.museumData.findIndex(item => item.id === m.id);
+
+                const div = document.createElement('div');
+                div.className = `museum-item ${activeMarkerIndex === originalIndex ? 'active' : ''}`;
+                div.id = `museum-item-${originalIndex}`;
+                div.onclick = () => selectMuseum(originalIndex, false);
+
+                div.innerHTML = `
+                    <div class="museum-item-header">
+                        <h3 class="museum-name">${m.name}</h3>
+                        <span class="tag ${m.type}">${m.type === 'art' ? '미술관' : '박물관'}</span>
+                    </div>
+                    <p class="museum-address"><i class="fa-solid fa-location-dot"></i> ${m.address}</p>
+                    <div class="museum-meta">
+                        <span><i class="fa-solid fa-phone"></i> ${m.phone}</span>
+                        ${m.url ? `<a href="${m.url}" target="_blank" class="museum-link" onclick="event.stopPropagation();">홈페이지 <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function selectMuseum(idx, fromMarkerClick) {
+            activeMarkerIndex = idx;
+            
+            // Highlight list item
+            document.querySelectorAll('.museum-item').forEach(el => el.classList.remove('active'));
+            const activeListItem = document.getElementById(`museum-item-${idx}`);
+            if (activeListItem) {
+                activeListItem.classList.add('active');
+                if (fromMarkerClick) {
+                    activeListItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+
+            const museum = window.museumData[idx];
+            const lat = museum.lat;
+            const lng = museum.lng;
+
+            // Pan to coords on all maps
+            isSyncing = true;
+            
+            // Google
+            if (maps.google) {
+                const latlng = { lat: lat, lng: lng };
+                maps.google.panTo(latlng);
+                maps.google.setZoom(16);
+                
+                const iwContent = createInfoWindowContent(museum);
+                infoWindows.google.setContent(iwContent);
+                infoWindows.google.open(maps.google, markers.google[idx]);
+            }
+
+            // Naver
+            if (maps.naver) {
+                const latlng = new naver.maps.LatLng(lat, lng);
+                maps.naver.panTo(latlng);
+                maps.naver.setZoom(12); // Naver zoom is closer
+                
+                const iwContent = createInfoWindowContent(museum);
+                infoWindows.naver.setContent(iwContent);
+                infoWindows.naver.open(maps.naver, markers.naver[idx]);
+            }
+
+            // Kakao
+            if (maps.kakao) {
+                const latlng = new kakao.maps.LatLng(lat, lng);
+                maps.kakao.panTo(latlng);
+                maps.kakao.setLevel(3); // Kakao high detail
+                
+                const iwContent = createInfoWindowContent(museum);
+                infoWindows.kakao.setContent(iwContent);
+                infoWindows.kakao.open(maps.kakao, markers.kakao[idx]);
+            }
+            
+            setTimeout(() => {
+                isSyncing = false;
+            }, 300);
+        }
+
+        function createInfoWindowContent(m) {
+            return `
+                <div class="custom-iw">
+                    <div class="custom-iw-title">${m.name}</div>
+                    <div class="custom-iw-addr">${m.address}</div>
+                    <div class="custom-iw-phone"><i class="fa-solid fa-phone"></i> ${m.phone}</div>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>
