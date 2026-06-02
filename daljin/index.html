@@ -411,33 +411,74 @@
             position: relative;
         }
 
+        /* Map Placeholder Overlay (API Key missing) */
         .map-status-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(250, 249, 246, 0.95);
+            background-size: cover;
+            background-position: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 10;
-            gap: 12px;
-            text-align: center;
             padding: 20px;
         }
 
-        .map-status-overlay i {
-            font-size: 28px;
+        #google-overlay {
+            background-image: url('images/google_mock.png');
+        }
+        #naver-overlay {
+            background-image: url('images/naver_mock.png');
+        }
+        #kakao-overlay {
+            background-image: url('images/kakao_mock.png');
+        }
+
+        .map-status-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 250px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .map-status-card i {
+            font-size: 24px;
             color: var(--primary);
         }
 
-        .map-status-overlay p {
+        .map-status-card h4 {
             font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .map-status-card p {
+            font-size: 11px;
             color: var(--text-muted);
-            max-width: 240px;
             line-height: 1.5;
+        }
+
+        .demo-tag {
+            font-size: 9px;
+            background-color: var(--primary);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         /* Modal Overlay (API Key Config) */
@@ -707,8 +748,12 @@
                 </div>
                 <div class="map-view" id="google-map">
                     <div class="map-status-overlay" id="google-overlay">
-                        <i class="fa-solid fa-lock"></i>
-                        <p>Google Maps API Key가 설정되지 않았습니다. 상단의 'API 키 설정'에서 키를 입력해 주세요.</p>
+                        <div class="map-status-card">
+                            <span class="demo-tag">DEMO VIEW</span>
+                            <i class="fa-solid fa-lock"></i>
+                            <h4>Google Maps 데모</h4>
+                            <p>API 키 미입력 상태입니다. 상단 'API 키 설정'에서 키를 입력하면 실제 라이브 지도로 자동 전환됩니다.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -722,8 +767,12 @@
                 </div>
                 <div class="map-view" id="naver-map">
                     <div class="map-status-overlay" id="naver-overlay">
-                        <i class="fa-solid fa-lock"></i>
-                        <p>Naver Maps Client ID가 설정되지 않았습니다. 상단의 'API 키 설정'에서 키를 입력해 주세요.</p>
+                        <div class="map-status-card">
+                            <span class="demo-tag">DEMO VIEW</span>
+                            <i class="fa-solid fa-lock"></i>
+                            <h4>Naver Maps 데모</h4>
+                            <p>Client ID 미입력 상태입니다. 상단 'API 키 설정'에서 키를 입력하면 실제 라이브 지도로 자동 전환됩니다.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -737,8 +786,12 @@
                 </div>
                 <div class="map-view" id="kakao-map">
                     <div class="map-status-overlay" id="kakao-overlay">
-                        <i class="fa-solid fa-lock"></i>
-                        <p>Kakao Maps App Key가 설정되지 않았습니다. 상단의 'API 키 설정'에서 키를 입력해 주세요.</p>
+                        <div class="map-status-card">
+                            <span class="demo-tag">DEMO VIEW</span>
+                            <i class="fa-solid fa-lock"></i>
+                            <h4>Kakao Maps 데모</h4>
+                            <p>JavaScript Key 미입력 상태입니다. 상단 'API 키 설정'에서 키를 입력하면 실제 라이브 지도로 자동 전환됩니다.</p>
+                        </div>
                     </div>
                 </div>
             </div>
